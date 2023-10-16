@@ -32,6 +32,7 @@ echo OPENAI_API_KEY= <YOUR API KEY> > secrets.toml # Create Secret
 ```bash
 streamlit run app.py --server.port 8502
 ```
+3. Try to load and play with : *Example_legal_doc.pdf*
 
 ## Authors
 | #  | Name                 | Role                   | M/F | Location | Company | Organization                  |

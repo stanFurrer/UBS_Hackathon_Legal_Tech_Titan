@@ -1,4 +1,5 @@
-from config import OPENAI_API_KEY
+from bs4 import BeautifulSoup
+from templatePrompt import template
 import streamlit as st
 from dotenv import load_dotenv
 import pickle
@@ -10,6 +11,7 @@ from langchain.vectorstores import FAISS
 from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
+from langchain import PromptTemplate
 import os
 
 st.set_page_config(page_title='🤗💬 PDF Chat App - GPT')
@@ -85,7 +87,7 @@ def main():
 
         # Step4. Get the Question From the User
         st.header("Step3. Ask questions about your PDF file:")
-        q="Tell me about the content of the PDF"
+        q="Can you Summarize the Description of Services?"
         query = st.text_input("Questions",value=q)
         #Step5.. If Ask is triggered Compute the Similarity Search
         if st.button("Ask"):
@@ -93,18 +95,31 @@ def main():
                 st.write('Warning: Please pass your OPEN AI API KEY on Step 1')
             else:
                 #Step5.1. Retrieve the top 3 Chunks
-                docs = VectorStore.similarity_search(query=query, k=3)
-                #Step5.2. Load the Model
+                similar_docs = VectorStore.similarity_search(query=query, k=3)
+                # Step5.2. Define your Prompt
+                prompt = PromptTemplate(input_variables=['context', 'question'], template=template)
+                #Step5.3. Define your model
                 llm = OpenAI()
-                chain = load_qa_chain(llm=llm, chain_type="stuff")
+                qa_chain = load_qa_chain(llm=llm, chain_type="stuff", prompt=prompt)
                 with get_openai_callback() as cb:
-                    response = chain.run(input_documents=docs, question=query)
-                    print(cb)
+                    response = qa_chain({"input_documents": similar_docs, "question": query})#qa_chain.run(input_documents=similar_docs, question=query)
+
+                # similar_docs_formated=""
+                # for i,d in enumerate(response["input_documents"]):
+                #     similar_docs_formated+= "Document{}. \n".format(i) + BeautifulSoup(d.page_content, "lxml").text +"\n"
+
                 st.header("Answer:")
-                st.write(response)
+                st.write(response["output_text"])
+                st.header("The Source")
+                st.write(response["input_documents"])
+                st.header("Your question reformulate")
+                st.write(template)               
                 st.write('--')
                 st.header("OpenAI API Usage:")
                 st.text(cb)
-
+        
+        st.header("Step4. Summarize the document")
+        if st.button("Summarize"):
+            print("To Do")
 if __name__ == '__main__':
     main()

@@ -15,23 +15,22 @@ st.set_page_config(page_title='🤗💬 PDF Chat App - GPT')
 
 # Sidebar contents
 with st.sidebar:
-    st.title('🤗💬 PDF Chat App')
+    st.title('💬 Legal Documents Chat App')
     st.markdown('''
     ## About
-    This app is an LLM-powered chatbot built using:
+    The following app is a prototype of our solution for the Hackathon.
+    It is Powered by Open-AI Gpt-3.5, uses Streamlit for Rendering and Langchain for Chaining:
     - [Streamlit](https://streamlit.io/)
     - [LangChain](https://python.langchain.com/)
-    - [OpenAI](https://platform.openai.com/docs/models) LLM model
+    - [OpenAI](https://platform.openai.com/docs/models)
 
     ''')
     add_vertical_space(5)
-    st.write('Made with ❤️ by [Livia Ellen](https://liviaellen.com/portfolio)')
-
-
+    st.write('Legal Tech Titans')
 
 
 def main():
-    st.header("Talk to your PDF 💬")
+    st.header("Chat With Your Legal Document ")
     st.write("This app uses OpenAI's LLM model to answer questions about your PDF file. Upload your PDF file and ask questions about it. The app will return the answer from your PDF file.")
 
     st.header("1. Pass your OPEN AI API KEY here")

@@ -38,8 +38,6 @@ pip install -r requirements.txt
 | 10 | Marta Mendez Perez   | ML Engineer            | F   | CH       | CS      | Analytics and Marketing       |
 | 11 | Stan Furrer          | ML Engineer            | M   | CH       | CS      | Credit Risk Analytics         |
 | 12 | Anup Ajayan          | DevOps Engineer        | M   | US       | UBS     | Market Risk Exposure Platforms|
-|----|----------------------|------------------------|-----|----------|---------|-------------------------------|
-
 
 
 

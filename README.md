@@ -8,18 +8,30 @@ Beyond merely presenting these documents, we've integrated a dynamic Q&A chatbot
 This repository serves as a **prototype** of our envisioned end solution. For the purposes of this prototype, we operate under the assumption that the document retrieval phase is already completed. The primary focus here is on the Q&A chatbot functionality and the document summarization capabilities.
 
 ## Installation & Requirements
+### Part1. Set up environment
 ```bash
 conda create --name UBS_hackathon python=3.10.6
 conda activate UBS_hackathon
 pip install -r requirements.txt
 ```
+### Part2. git clone repo
+```bash
+git clone https://github.com/stanFurrer/UBS_Hackathon_Legal_Tech_Titan.git
+```
+### Part3. Save Secret (Your OpenAI API Key)
+* Found your own OpenAI API Key : [Here](https://platform.openai.com/account/api-keys)
+```bash
+mkdir .streamlit # Create Folder
+echo OPENAI_API_KEY= <YOUR API KEY> > secrets.toml # Create Secret
+```
 
 ## Running with Default Settings
 
-1. Ensure you've activated the conda environment as mentioned above.
-2. [Provide step-by-step instructions specific to your application, e.g., "Run the main script using the command python main.py."].
-3. Ask your specific legal question in the provided interface/query box.
-4. The system will process the query and return the top N relevant legal documents for your perusal.
+1. Ensure you've activated the conda environment as mentioned above and have create your secret.
+2. run the app : 
+```bash
+streamlit run app.py --server.port 8502
+```
 
 ## Authors
 | #  | Name                 | Role                   | M/F | Location | Company | Organization                  |

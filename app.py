@@ -1,3 +1,4 @@
+from config import OPENAI_API_KEY
 import streamlit as st
 from dotenv import load_dotenv
 import pickle
@@ -15,50 +16,51 @@ st.set_page_config(page_title='🤗💬 PDF Chat App - GPT')
 
 # Sidebar contents
 with st.sidebar:
-    st.title('💬 Legal Documents Chat App')
+    st.title('Legal Documents Chat App')
     st.markdown('''
     ## About
-    The following app is a prototype of our solution for the Hackathon.
-    It is Powered by Open-AI Gpt-3.5, uses Streamlit for Rendering and Langchain for Chaining:
+    Prototype of our solution for the Hackathon.
+    Build with : 
     - [Streamlit](https://streamlit.io/)
     - [LangChain](https://python.langchain.com/)
     - [OpenAI](https://platform.openai.com/docs/models)
-
     ''')
     add_vertical_space(5)
-    st.write('Legal Tech Titans')
+    st.write('''Legal Tech Titans. 🔥We Gonna Win🔥''')
 
 
 def main():
-    st.header("Chat With Your Legal Document ")
-    st.write("This app uses OpenAI's LLM model to answer questions about your PDF file. Upload your PDF file and ask questions about it. The app will return the answer from your PDF file.")
+    #Step1. Front-End
+    st.header("Chat with your legal document ")
+    st.markdown('''
+             This app uses OpenAI's ChatGpt 3.5 model to answer questions about your PDF file.  
+             ''')
 
-    st.header("1. Pass your OPEN AI API KEY here")
+    st.header("Step1. Pass your OpenAI API Key")
     v='demo'
     openai_key=st.text_input("**OPEN AI API KEY**", value=v)
     st.write("You can get your OpenAI API key from [here](https://platform.openai.com/account/api-keys)")
 
-
+    #Step2. Set-up the OpenAI API Key
     if openai_key==v:
-        openai_key=st.secrets["OPENAI_API_KEY"]
-    # if openai_key=='':
-    #     load_dotenv()
+        openai_key = st.secrets["OPENAI_API_KEY"]
+
     os.environ["OPENAI_API_KEY"] = openai_key
 
-    # upload a PDF file
-
-    st.header("2. Upload PDF")
+    #Step3. upload a PDF file
+    st.header("Step2. Upload PDF")
     pdf = st.file_uploader("**Upload your PDF**", type='pdf')
 
-    # st.write(pdf)
-
     if pdf is not None:
+        # Step3.1. Read PDF
         pdf_reader = PdfReader(pdf)
-
         text = ""
+
+        # Step3.2. Extract the text of all the Pages
         for page in pdf_reader.pages:
             text += page.extract_text()
-
+        
+        # Step3.3. Split the Text Into Chunks
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
             chunk_overlap=200,
@@ -66,42 +68,33 @@ def main():
             )
         chunks = text_splitter.split_text(text=text)
 
-        # # embeddings
+        # Step3.4. Save the Embeddings Locally.
+        #  Load if Exist
+        #  Create Vector Embedding. Here we Use FAISS From Facebook. 
         store_name = pdf.name[:-4]
         st.write(f'{store_name}')
-        # st.write(chunks)
 
         if os.path.exists(f"{store_name}.pkl"):
             with open(f"{store_name}.pkl", "rb") as f:
                 VectorStore = pickle.load(f)
-            # st.write('Embeddings Loaded from the Disk')s
         else:
             embeddings = OpenAIEmbeddings()
             VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
             with open(f"{store_name}.pkl", "wb") as f:
                 pickle.dump(VectorStore, f)
 
-        # embeddings = OpenAIEmbeddings()
-        # VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
-
-    # st.header("or.. Try it with this The Alchaemist PDF book")
-    # if st.button('Ask The Alchemist Book Questions'):
-    #     with open("The_Alchemist.pkl", "rb") as f:
-    #         VectorStore = pickle.load(f)
-        # Accept user questions/query
-        st.header("3. Ask questions about your PDF file:")
+        # Step4. Get the Question From the User
+        st.header("Step3. Ask questions about your PDF file:")
         q="Tell me about the content of the PDF"
         query = st.text_input("Questions",value=q)
-        # st.write(query)
-
+        #Step5.. If Ask is triggered Compute the Similarity Search
         if st.button("Ask"):
-            # st.write(openai_key)
-            # os.environ["OPENAI_API_KEY"] = openai_key
             if openai_key=='':
                 st.write('Warning: Please pass your OPEN AI API KEY on Step 1')
             else:
+                #Step5.1. Retrieve the top 3 Chunks
                 docs = VectorStore.similarity_search(query=query, k=3)
-
+                #Step5.2. Load the Model
                 llm = OpenAI()
                 chain = load_qa_chain(llm=llm, chain_type="stuff")
                 with get_openai_callback() as cb:

@@ -22,4 +22,26 @@ pip install -r requirements.txt
 4. The system will process the query and return the top N relevant legal documents for your perusal.
 
 ## Authors
-[Provide table here]
+| #  | Name                 | Role                   | M/F | Location | Company | Organization                  |
+|----|----------------------|------------------------|-----|----------|---------|-------------------------------|
+|    | Sarah Burke          | Team Mentor            | F   | CH       | CS      | Digital Legal Solutions       |
+|    | Richard James        | Team Sponsor           | M   | CH       | UBS     | Digital Legal Solutions       |
+| 1  | Banarasi Tippa       | Tech Lead              | M   | US       | UBS     | Digital Legal Solutions       |
+| 2  | Vlad Stoian          | Product Owner          | M   | LON      | UBS     | Digital Legal Solutions       |
+| 5  | Olivia Monk          | Program Manager        | F   | LON      | UBS     | Digital Legal Solutions       |
+| 3  | James Peter Lecard   | Automation Engineer    | M   | CH       | UBS     | Digital Legal Solutions       |
+| 4  | Gioele Crispo        | ML Engineer            | M   | CH       | UBS     | Digital Legal Solutions       |
+| 6  | Ilias Fotopoulos     | ML Engineer            | M   | CH       | UBS     | Digital Legal Solutions       |
+| 7  | James Roy            | ML Engineer            | M   | CH       | UBS     | ADA Talent Development        |
+| 8  | Wei Jiang            | ML Engineer            | F   | CH       | CS      | Credit Risk Analytics         |
+| 9  | Labinot Jakupi       | Full Stack  Developer  | M   | CH       | CS      | Analytics and Marketing       |
+| 10 | Marta Mendez Perez   | ML Engineer            | F   | CH       | CS      | Analytics and Marketing       |
+| 11 | Stan Furrer          | ML Engineer            | M   | CH       | CS      | Credit Risk Analytics         |
+| 12 | Anup Ajayan          | DevOps Engineer        | M   | US       | UBS     | Market Risk Exposure Platforms|
+|----|----------------------|------------------------|-----|----------|---------|-------------------------------|
+
+
+
+
+
+

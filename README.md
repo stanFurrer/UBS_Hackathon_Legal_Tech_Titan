@@ -9,7 +9,7 @@ This repository serves as a **prototype** of our envisioned end solution. For th
 
 ## Installation & Requirements
 ```bash
-conda create --name UBS_hackathon python=3.7
+conda create --name UBS_hackathon python=3.10.6
 conda activate UBS_hackathon
 pip install -r requirements.txt
 ```

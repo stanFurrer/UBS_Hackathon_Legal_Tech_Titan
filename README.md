@@ -7,6 +7,8 @@ Beyond merely presenting these documents, we've integrated a dynamic Q&A chatbot
 
 This repository serves as a **prototype** of our envisioned end solution. For the purposes of this prototype, we operate under the assumption that the document retrieval phase is already completed. The primary focus here is on the Q&A chatbot functionality and the document summarization capabilities.
 
+--> Try the App : [HERE](https://ubs-hackathon-legal-tech-titan.streamlit.app/)
+
 ## Installation & Requirements
 ### Part1. Set up environment
 ```bash
